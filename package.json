@@ -1,0 +1,12 @@
+{
+  "name": "drive",
+  "version": "1.0.0",
+  "description": "test google drive api",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/developersoul/drive.git",
+    "type": "git"
+  },
+  "author": "Alejandro Sanabria <alesanabriav@gmail.com>",
+  "license": "MIT"
+}
