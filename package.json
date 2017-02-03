@@ -8,5 +8,9 @@
     "type": "git"
   },
   "author": "Alejandro Sanabria <alesanabriav@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^16.1.0"
+  }
 }
