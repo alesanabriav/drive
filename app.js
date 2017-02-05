@@ -1,22 +1,34 @@
 import http from 'http';
 import express from 'express';
-import Session from 'express-session';
-import google from 'googleapis';
 import mongoose from 'mongoose';
-
-const plus = google.plus('v1');
-const OAuth2 = google.auth.OAuth2;
-const api = require('./client_id.json');
-const ClientId = api.web.client_id;
-const ClientSecret = api.web.client_secret;
-const RedirectionUrl = "http://localhost:4040/oauthCallback";
-
+import bodyParser from 'body-parser';
+import session from 'express-session';
 mongoose.connect('mongodb://localhost/drive');
 const app = express();
+import driveApi from './controllers/drive';
+import usersApi from './controllers/users';
+
+app.use(session({
+  secret: 'drive_api_test',
+  resave: false,
+	saveUninitialized: false
+}));
+
+app.use(bodyParser.urlencoded({ 
+	extended: false 
+}));
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     return res.sendFile(`${__dirname}/public/index.html`);
 });
+
+app.get('/api/v1/drive', driveApi.getAccess);
+app.get('/api/v1/drive/refresh', driveApi.refreshToken);
+app.get('/oauthCallback', driveApi.getTokens);
+app.get('/api/v1/users', usersApi.getAll);
+app.post('/api/v1/users', usersApi.store);
 
 var server = http.createServer(app);
 server.listen(4040);
